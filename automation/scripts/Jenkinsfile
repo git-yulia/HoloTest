@@ -1,0 +1,134 @@
+pipeline 
+{
+  parameters 
+  {
+    choice(name: 'DEMO_TYPE', choices: ['Failed build', 'Fixed build'], description: 'Fake a passing or failing build for the demo.')
+    booleanParam(name: 'Run_EditMode_Tests', defaultValue: true, description: 'Tests the game state prior to entering PlayMode.')
+    booleanParam(name: 'Run_PlayMode_Tests', defaultValue: true, description: 'Tests that require runtime (e.g. Update) or initialization (such as Awake).')
+    booleanParam(name: 'Run_PerceptionSim_Interface_Tests', defaultValue: true, description: 'Run the interface tests in the emulator.')
+    booleanParam(name: 'Run_Network_Comm_Tests', defaultValue: true, description: 'Run networked interface tests between simulated users.')
+    booleanParam(name: 'NOTIFY', defaultValue: true, description: 'Notify Discord channel of build status, and create Jira tickets for bugs.')
+    booleanParam(name: 'CLEAN', defaultValue: false, description: 'Deletes and re-clones the repository before running this build.')
+  }
+
+  agent
+  {
+    node 
+    {
+      label 'Windows'
+      customWorkspace 'C:/Jenkins/workspace/'
+    }
+  }
+
+  options 
+  {
+    timestamps()
+    timeout(time: 30, unit: 'MINUTES')
+  }
+
+  environment
+  {
+    // Paths are relative to custom workspace 
+    PROJECT_PATH = '.\\src'
+    UNITY_PATH = '\"C:\\Program Files\\Unity\\Hub\\Editor\\2020.3.0f1\\Editor\\Unity.exe\"'
+
+    // DISCORD_WEBHOOK = """
+    // https://discordapp.com/api/webhooks/814714586397802507/7Ii7m9_
+    // KzuO0P2T8EV8qem-UBy64sUu_Mpx9QfWzHTelq7YThfI3sClnAVwYQcAD4WTs
+    // """
+    DISCORD_WEBHOOK = "https://discordapp.com/api/webhooks/814714586397802507/7Ii7m9_KzuO0P2T8EV8qem-UBy64sUu_Mpx9QfWzHTelq7YThfI3sClnAVwYQcAD4WTs"
+    
+  }
+
+  stages
+  {
+    stage('Configure_Build')
+    {
+      steps
+      {
+        script 
+        {
+          echo "Add any pre-build setup here."
+        }
+      }
+    }
+
+    stage('Clean')
+    {
+      when
+      {
+        expression { return params.CLEAN }
+      }
+      steps
+      {
+        deleteDir()
+      }
+    }
+
+    stage('Checkout')
+    {
+      steps
+      {
+        echo "Checking out code from GitHub..."
+        git branch: 'main',
+        credentialsId: 'GitHub',
+        url: 'https://github.com/git-yulia/HoloTest.git/'
+
+        script
+        {
+          // Set Jenkins build name to the commit SHA
+          // def git_cmd = "git log -n 1"
+          // def sha = bat(returnStdout: true, script: "${git_cmd}").trim()
+          // def sha_start_index = sha.indexOf("${git_cmd}")// + ("${git_cmd}".length())
+          // sha = sha.substring(sha_start_index, 5)
+          // def sha = env.GIT_COMMIT.take(7)
+          currentBuild.displayName = "Add a build title."
+          currentBuild.description = "Add a description."
+        }
+      }
+    }
+
+    stage('Test')
+    {
+      steps 
+      {
+        script 
+        {
+          String unity_cmd = "${UNITY_PATH} -batchmode -nographics -projectPath ${PROJECT_PATH} -runTests"
+          String logs_path = "${WORKSPACE}/automation/logs"
+
+          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
+          {
+            if (params.Run_EditMode_Tests)
+            {
+              echo "Running edit mode tests..."
+              bat "$unity_cmd -testResults ${logs_path}/editmodetests.xml -testPlatform editmode -logFile ${logs_path}/edittestlog.txt"
+            }
+            if (params.Run_PlayMode_Tests)
+            {
+              echo "Running play mode tests..."
+              bat "$unity_cmd -testResults ${logs_path}/playmodetests.xml -testPlatform playmode -logFile ${logs_path}/playtestlog.txt"
+            }
+          }
+        }
+      }
+    }
+
+    stage('Notify')
+    {
+      when 
+      {
+        expression { return params.NOTIFY }
+      }
+      steps
+      {
+        discordSend webhookURL: "${DISCORD_WEBHOOK}", description: 'Pipeline Build', footer: "Footer Text", title: env.JOB_NAME, result: currentBuild.currentResult
+        // link: env.BUILD_URL,
+
+        // Publish NUnit (UTF) test results
+        // nunit testResultsPattern: "logs/editmodetests.xml"
+        // might need to be reformatted. 
+      }
+    }
+  }
+}
