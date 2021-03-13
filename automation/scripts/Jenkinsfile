@@ -107,7 +107,7 @@ pipeline
             if (params.Run_PlayMode_Tests)
             {
               echo "Running play mode tests..."
-              bat "$unity_cmd -testResults ${logs_path}/playmodetests.xml -testPlatform playmode -logFile ${logs_path}/playtestlog.txt"
+              bat "$unity_cmd -testResults ${logs_path}/playmodetests.xml -testPlatform playmode -logFile ${logs_path}/playtestlog.txt -outFolder ${logs_path}/playmodetests_out/"
             }
           }
         }

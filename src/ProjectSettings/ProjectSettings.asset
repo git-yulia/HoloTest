@@ -51,7 +51,7 @@ PlayerSettings:
   m_MTRendering: 1
   mipStripping: 0
   numberOfMipsStripped: 0
-  m_StackTraceTypes: 010000000100000001000000010000000100000001000000
+  m_StackTraceTypes: 020000000200000002000000020000000200000001000000
   iosShowActivityIndicatorOnLoading: -1
   androidShowActivityIndicatorOnLoading: -1
   iosUseCustomAppBackgroundBehavior: 0
@@ -129,6 +129,7 @@ PlayerSettings:
     Others: 1
   bundleVersion: 0.1
   preloadedAssets:
+  - {fileID: 0}
   - {fileID: -8173806845940297335, guid: 8436f4c7103be254db90e84c3378e2da, type: 2}
   - {fileID: -2040242156187849265, guid: 0d4ec16bdd982094c9bf57c0eea816b6, type: 2}
   - {fileID: -1320164442120687749, guid: da1189b6e3050c74d87621232016ea65, type: 2}
@@ -149,7 +150,8 @@ PlayerSettings:
   resolutionScalingMode: 0
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
-  applicationIdentifier: {}
+  applicationIdentifier:
+    Standalone: com.DefaultCompany.src
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -623,14 +625,19 @@ PlayerSettings:
   metroSplashScreenUseBackgroundColor: 0
   platformCapabilities:
     WindowsStoreApps:
+      VideosLibrary: True
       GazeInput: True
-      PrivateNetworkClientServer: False
-      InternetClientServer: False
+      PrivateNetworkClientServer: True
+      InternetClientServer: True
       SpatialPerception: True
+      PicturesLibrary: True
       InternetClient: True
       WebCam: True
       Microphone: True
-  metroTargetDeviceFamilies: {}
+  metroTargetDeviceFamilies:
+    Desktop: True
+    Holographic: True
+    Mobile: True
   metroFTAName: 
   metroFTAFileTypes: []
   metroProtocolName: 
