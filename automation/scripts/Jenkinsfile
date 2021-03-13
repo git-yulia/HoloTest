@@ -28,6 +28,8 @@ pipeline
 
   environment
   {
+  //    PATH = "C:\\Program Files\\Git\\usr\\bin;C:\\Program Files\\Git\\bin;${env.PATH}"
+
     // Paths are relative to custom workspace 
     PROJECT_PATH = '.\\src'
     UNITY_PATH = '\"C:\\Program Files\\Unity\\Hub\\Editor\\2020.3.0f1\\Editor\\Unity.exe\"'
@@ -75,14 +77,12 @@ pipeline
         script
         {
           // Set Jenkins build name to the commit SHA
-          sh("echo hello")
-
           // def git_cmd = "git log -n 1"
           // def sha = bat(returnStdout: true, script: "${git_cmd}").trim()
           // def sha_start_index = sha.indexOf("${git_cmd}")// + ("${git_cmd}".length())
           // sha = sha.substring(sha_start_index, 5)
 
-          currentBuild.displayName = "Build ${sha}"
+          currentBuild.displayName = "Build title"
           currentBuild.description = "Add a description."
         }
       }
@@ -132,6 +132,31 @@ pipeline
         // Publish NUnit (UTF) test results
         nunit testResultsPattern: "${WORKSPACE}/automation/logs/editmodetests.xml"
       }
+    }
+  }
+
+  post 
+  {
+    always 
+    {
+        echo 'This will always run'
+    }
+    success 
+    {
+        echo 'This will run only if successful'
+    }
+    failure 
+    {
+        echo 'This will run only if failed'
+    }
+    unstable 
+    {
+        echo 'This will run only if the run was marked as unstable'
+    }
+    changed 
+    {
+        echo 'This will run only if the state of the Pipeline has changed'
+        echo 'For example, if the Pipeline was previously failing but is now successful'
     }
   }
 }

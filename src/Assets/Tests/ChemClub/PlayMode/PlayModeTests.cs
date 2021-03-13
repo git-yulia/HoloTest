@@ -23,16 +23,18 @@ namespace HoloTest_Namespace
             SceneManager.LoadScene("ChemClub");
         }
 
-        [Test]
-        public void CheckFramerate()
+        [UnityTest]
+        public IEnumerator CheckFramerate()
         {
             GameObject go_camera = GameObject.Find("main_camera");
             Assert.NotNull(go_camera);
+            yield return new WaitForSeconds(5);
 
             go_SceneLogic = GameObject.Find("Scene");
             SceneLogicScript = go_SceneLogic.GetComponent<SceneLogic>();
             float framerate = SceneLogicScript.GetAverageFramerate();
             Assert.GreaterOrEqual(framerate, 60);
+            yield return null;
         }
 
         ///

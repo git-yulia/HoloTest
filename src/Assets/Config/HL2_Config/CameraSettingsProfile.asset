@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8bf066bf8a4947a1be502d267edb82f, type: 3}
-  m_Name: Mock HMD Build Settings
+  m_Script: {fileID: 11500000, guid: a794cc45c30a79b4da55bfd426876503, type: 3}
+  m_Name: CameraSettingsProfile
   m_EditorClassIdentifier: 
-  renderMode: 1
+  isCustomProfile: 1
+  renderFromPVCameraForMixedRealityCapture: 0
+  reprojectionMethod: 0
+  readingModeEnabled: 0

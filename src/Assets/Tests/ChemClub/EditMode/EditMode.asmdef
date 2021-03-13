@@ -2,11 +2,29 @@
     "name": "EditMode",
     "references": 
     [
-        "ChemClubAssembly"
+        "ChemClubAssembly",
+        "Unity.TextMeshPro",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner",
+        "Microsoft.MixedReality.Toolkit",
+        "Microsoft.MixedReality.Toolkit.Gltf",
+        "Microsoft.MixedReality.Toolkit.SDK",
+        "Microsoft.MixedReality.Toolkit.Async",
+        "Microsoft.MixedReality.Toolkit.Tests.Utilities",
+        "Microsoft.MixedReality.Toolkit.Editor.BuildAndDeploy",
+        "Microsoft.MixedReality.Toolkit.Editor.ClassExtensions",
+        "Microsoft.MixedReality.Toolkit.Services.DiagnosticsSystem",
+        "Microsoft.MixedReality.Toolkit.Services.InputSystem",
+        "Microsoft.MixedReality.Toolkit.Services.InputSimulation",
+        "Microsoft.MixedReality.Toolkit.Services.InputSimulation.Editor",
+        "Microsoft.MixedReality.Toolkit.Services.SpatialAwarenessSystem",
+        "Microsoft.MixedReality.Toolkit.Providers.ObjectMeshObserver",
+        "Microsoft.MixedReality.Toolkit.Services.InputAnimation",
+        "Microsoft.MixedReality.Toolkit.SDK.Experimental.Interactive",
+        "Microsoft.MixedReality.Toolkit.Services.SceneSystem"
     ],
     "optionalUnityReferences": 
     [
-        "TestAssemblies"
     ],
     "includePlatforms": 
     [
