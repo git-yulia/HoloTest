@@ -2,7 +2,7 @@ pipeline
 {
   parameters 
   {
-    choice(name: 'DEMO_TYPE', choices: ['Failed build', 'Fixed build'], description: 'Fake a passing or failing build for the demo.')
+    choice(name: 'DEMO_TYPE', choices: ['Failed build', 'Fixed build'], description: 'Stage a passing or failing build for the demo.')
     booleanParam(name: 'Run_EditMode_Tests', defaultValue: true, description: 'Tests the game state prior to entering PlayMode.')
     booleanParam(name: 'Run_PlayMode_Tests', defaultValue: true, description: 'Tests that require runtime (e.g. Update) or initialization (such as Awake).')
     booleanParam(name: 'Run_PerceptionSim_Interface_Tests', defaultValue: true, description: 'Run the interface tests in the emulator.')
@@ -32,12 +32,10 @@ pipeline
     PROJECT_PATH = '.\\src'
     UNITY_PATH = '\"C:\\Program Files\\Unity\\Hub\\Editor\\2020.3.0f1\\Editor\\Unity.exe\"'
 
-    // DISCORD_WEBHOOK = """
-    // https://discordapp.com/api/webhooks/814714586397802507/7Ii7m9_
-    // KzuO0P2T8EV8qem-UBy64sUu_Mpx9QfWzHTelq7YThfI3sClnAVwYQcAD4WTs
-    // """
-    DISCORD_WEBHOOK = "https://discordapp.com/api/webhooks/814714586397802507/7Ii7m9_KzuO0P2T8EV8qem-UBy64sUu_Mpx9QfWzHTelq7YThfI3sClnAVwYQcAD4WTs"
-    
+    DISCORD_WEBHOOK = """
+    https://discordapp.com/api/webhooks/814714586397802507/7Ii7m9_
+    KzuO0P2T8EV8qem-UBy64sUu_Mpx9QfWzHTelq7YThfI3sClnAVwYQcAD4WTs
+    """
   }
 
   stages
@@ -77,12 +75,14 @@ pipeline
         script
         {
           // Set Jenkins build name to the commit SHA
+          sh("echo hello")
+
           // def git_cmd = "git log -n 1"
           // def sha = bat(returnStdout: true, script: "${git_cmd}").trim()
           // def sha_start_index = sha.indexOf("${git_cmd}")// + ("${git_cmd}".length())
           // sha = sha.substring(sha_start_index, 5)
-          // def sha = env.GIT_COMMIT.take(7)
-          currentBuild.displayName = "Add a build title."
+
+          currentBuild.displayName = "Build ${sha}"
           currentBuild.description = "Add a description."
         }
       }
@@ -122,12 +122,15 @@ pipeline
       }
       steps
       {
-        discordSend webhookURL: "${DISCORD_WEBHOOK}", description: 'Pipeline Build', footer: "Footer Text", title: env.JOB_NAME, result: currentBuild.currentResult
-        // link: env.BUILD_URL,
+        discordSend webhookURL: "${DISCORD_WEBHOOK}", \
+        description: 'Pipeline Build', \
+        footer: "Footer Text", \
+        title: env.JOB_NAME, \
+        result: currentBuild.currentResult
+        // link: env.BUILD_URL
 
         // Publish NUnit (UTF) test results
-        // nunit testResultsPattern: "logs/editmodetests.xml"
-        // might need to be reformatted. 
+        nunit testResultsPattern: "${WORKSPACE}/automation/logs/editmodetests.xml"
       }
     }
   }
