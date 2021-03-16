@@ -26,7 +26,7 @@ public class JenkinsBuild
     {
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/ChemClub.unity" };
-        // buildPlayerOptions.locationPathName = "generic_build";
+        buildPlayerOptions.locationPathName = "Assets/Builds/";
         buildPlayerOptions.target = BuildTarget.WSAPlayer;
         buildPlayerOptions.options = BuildOptions.None;
 
