@@ -95,12 +95,12 @@ pipeline
             unity_path = UNITY_PATH_2020
           }
 
-          String unity_cmd = "$unity_path -batchmode -nographics -quit -executeMethod -projectPath ${PROJECT_PATH} -runTests"
+          String unity_cmd = "$unity_path -batchmode -nographics -quit -projectPath ${PROJECT_PATH}"
           String logs_path = "${WORKSPACE}/automation/logs"
 
           echo "Building Unity project..."
 
-          bat "$unity_cmd JenkinsBuild.BuildOnWindows ${JOB_NAME} ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/output"
+          bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -executeMethod JenkinsBuild.BuildOnWindows ${JOB_NAME} ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/output"
         }
       }
     }
