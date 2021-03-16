@@ -27,15 +27,15 @@ UnityPackageManager/
 #---------------------------------#
 # MRTK-Specific List    
 #---------------------------------#
-*/artifacts/
-*/Assets/ThirdParty*
-*/Assets/TextMesh Pro/*
-*/--Version/
-*/Assets/StreamingAssets/GltfModels/
-*/Assets/StreamingAssets/GltfModels.meta
-*/Assets/StreamingAssets.meta
-*/Assets/MixedRealityToolkit.Generated*
-*mrtk_log_mostRecentET.csv
+# */artifacts/
+# */Assets/ThirdParty*
+# #*/Assets/TextMesh Pro/*
+# */--Version/
+# */Assets/StreamingAssets/GltfModels/
+# */Assets/StreamingAssets/GltfModels.meta
+# */Assets/StreamingAssets.meta
+# */Assets/MixedRealityToolkit.Generated*
+# *mrtk_log_mostRecentET.csv
 
 #---------------------------------#
 # Assets

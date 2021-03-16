@@ -78,43 +78,11 @@ pipeline
       }
     }
 
-    stage('Build')
-    {
-      steps
-      {
-        script
-        {
-          String unity_path = ""
-
-          if (params.Unity_Version == '2019.4.22f')
-          {
-            unity_path = UNITY_PATH_2019
-          }
-          else
-          {
-            unity_path = UNITY_PATH_2020
-          }
-
-          String unity_cmd = "$unity_path -batchmode -nographics -quit -projectPath ${PROJECT_PATH}"
-          String logs_path = "${WORKSPACE}/automation/logs"
-
-          //echo "Opening Unity project and switching the build target to UWP/WSAPlayer..."
-
-          // bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -executeMethod EditorUserBuildSettings.SwitchActiveBuildTarget BuildTargetGroup.WSA BuildTarget.WSAPlayer"
-
-          echo "Building Unity project..."
-
-          bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -executeMethod JenkinsBuild.BuildOnWindows"
-          // ${JOB_NAME} ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/output
-        }
-      }
-    }
-
-    // stage('Test')
+    // stage('Build')
     // {
-    //   steps 
+    //   steps
     //   {
-    //     script 
+    //     script
     //     {
     //       String unity_path = ""
 
@@ -127,25 +95,59 @@ pipeline
     //         unity_path = UNITY_PATH_2020
     //       }
 
-    //       String unity_cmd = "$unity_path -batchmode -nographics -projectPath ${PROJECT_PATH} -runTests"
+    //       String unity_cmd = "$unity_path -batchmode -nographics -quit -projectPath ${PROJECT_PATH}"
     //       String logs_path = "${WORKSPACE}/automation/logs"
 
-    //       catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
-    //       {
-    //         if (params.Run_EditMode_Tests)
-    //         {
-    //           echo "Running edit mode tests..."
-    //           bat "$unity_cmd -testResults ${logs_path}/editmodetests.xml -testPlatform editmode -logFile ${logs_path}/edittestlog.txt"
-    //         }
-    //         if (params.Run_PlayMode_Tests)
-    //         {
-    //           echo "Running play mode tests..."
-    //           bat "$unity_cmd -testResults ${logs_path}/playmodetests.xml -testPlatform playmode -logFile ${logs_path}/playtestlog.txt -outFolder ${logs_path}/playmodetests_out/"
-    //         }
-    //       }
+    //       //echo "Opening Unity project and switching the build target to UWP/WSAPlayer..."
+
+    //       // bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -executeMethod EditorUserBuildSettings.SwitchActiveBuildTarget BuildTargetGroup.WSA BuildTarget.WSAPlayer"
+
+    //       echo "Building Unity project..."
+
+    //       bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -executeMethod JenkinsBuild.BuildOnWindows"
+    //       // ${JOB_NAME} ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/output
     //     }
     //   }
     // }
+
+    stage('Test')
+    {
+      steps 
+      {
+        script 
+        {
+          String unity_path = ""
+
+          if (params.Unity_Version == '2019.4.22f')
+          {
+            unity_path = UNITY_PATH_2019
+          }
+          else
+          {
+            unity_path = UNITY_PATH_2020
+          }
+
+          String unity_cmd = "$unity_path -batchmode -nographics -projectPath ${PROJECT_PATH} -runTests"
+          String logs_path = "${WORKSPACE}/automation/logs"
+
+          // SWITCH PLATFORM FIRST 
+
+          catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
+          {
+            if (params.Run_EditMode_Tests)
+            {
+              echo "Running edit mode tests..."
+              bat "$unity_cmd -testResults ${logs_path}/editmodetests.xml -testPlatform editmode -logFile ${logs_path}/edittestlog.txt"
+            }
+            if (params.Run_PlayMode_Tests)
+            {
+              echo "Running play mode tests..."
+              bat "$unity_cmd -testResults ${logs_path}/playmodetests.xml -testPlatform playmode -logFile ${logs_path}/playtestlog.txt -outFolder ${logs_path}/playmodetests_out/"
+            }
+          }
+        }
+      }
+    }
 
     stage('Notify')
     {
