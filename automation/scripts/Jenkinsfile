@@ -2,12 +2,10 @@ pipeline
 {
   parameters 
   {
-    choice(name: 'Demo_Type', choices: ['Passing build', 'Failing build'], description: 'Stage a passing or failing build for the demo.')
     choice(name: 'Unity_Version', choices: ['2019.4.22f1', '2020.3.0f1'], description: 'Unity 2019 is recommended for full MRTK support.')
     booleanParam(name: 'Run_EditMode_Tests', defaultValue: true, description: 'Tests the game state prior to entering PlayMode.')
-    //booleanParam(name: 'Run_PlayMode_Tests', defaultValue: true, description: 'Tests that require runtime (e.g. Update) or initialization (such as Awake).')
-    //booleanParam(name: 'Run_PerceptionSim_Interface_Tests', defaultValue: true, description: 'Run the interface tests in the emulator.')
     booleanParam(name: 'Notify', defaultValue: true, description: 'Notify Discord channel of build status, and create Jira tickets for bugs.')
+    booleanParam(name: 'Build', defaultValue: false, description: 'Full build, takes a long time.')
     booleanParam(name: 'Clean', defaultValue: false, description: 'Deletes and re-clones the repository before running this build.')
   }
 
@@ -38,17 +36,6 @@ pipeline
 
   stages
   {
-    stage('Configure_Build')
-    {
-      steps
-      {
-        script 
-        {
-          echo "Add any pre-build setup here."
-        }
-      }
-    }
-
     stage('Clean')
     {
       when
@@ -72,7 +59,6 @@ pipeline
 
         script
         {
-          currentBuild.displayName = "Build title"
           currentBuild.description = "Add a description."
         }
       }
@@ -80,8 +66,12 @@ pipeline
 
     stage('Build')
     {
-      steps
+      when
       {
+        expression { return params.Build }
+      }
+      steps
+      {      
         script
         {
           String unity_path = ""
@@ -99,13 +89,13 @@ pipeline
           String logs_path = "${WORKSPACE}/automation/logs"
 
           //echo "Opening Unity project and switching the build target to UWP/WSAPlayer..."
-
           // bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -executeMethod EditorUserBuildSettings.SwitchActiveBuildTarget BuildTargetGroup.WSA BuildTarget.WSAPlayer"
+          // ${JOB_NAME} ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/output
 
           echo "Building Unity project..."
 
           bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -buildTarget WindowsStoreApps -executeMethod JenkinsBuild.BuildOnWindows"
-          // ${JOB_NAME} ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/output
+          
         }
       }
     }
@@ -130,8 +120,6 @@ pipeline
           // -nographics
           String unity_cmd = "$unity_path -batchmode -projectPath ${PROJECT_PATH} -runTests"
           String logs_path = "${WORKSPACE}/automation/logs"
-
-          // SWITCH PLATFORM FIRST 
 
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
           {
@@ -158,11 +146,13 @@ pipeline
       }
       steps
       {
-        discordSend webhookURL: "${DISCORD_WEBHOOK}", description: 'Pipeline Build', footer: "Footer Text", title: env.JOB_NAME, result: currentBuild.currentResult
+        echo "Notify steps go here..."
+
+        // discordSend webhookURL: "${DISCORD_WEBHOOK}", description: 'Pipeline Build', footer: "Footer Text", title: env.JOB_NAME, result: currentBuild.currentResult
         // link: env.BUILD_URL
 
         // Publish NUnit (UTF) test results
-        nunit testResultsPattern: "${WORKSPACE}/automation/logs/editmodetests.xml"
+        // nunit testResultsPattern: "${WORKSPACE}/automation/logs/editmodetests.xml"
       }
     }
   }
