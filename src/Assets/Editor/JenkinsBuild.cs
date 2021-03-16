@@ -16,7 +16,7 @@ public class JenkinsBuild
 
     public static void BuildOnWindows()
     {
-        EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.WSA, BuildTarget.WSAPlayer);
+        // EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.WSA, BuildTarget.WSAPlayer);
         EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
         string build_name = APP_NAME + ".app";
         Debug.Log("Testing....");
@@ -28,6 +28,7 @@ public class JenkinsBuild
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/ChemClub.unity" };
         buildPlayerOptions.locationPathName = target_dir;
+        buildPlayerOptions.targetGroup = BuildTargetGroup.WSA; 
         buildPlayerOptions.target = BuildTarget.WSAPlayer;
         buildPlayerOptions.options = BuildOptions.None;
 
