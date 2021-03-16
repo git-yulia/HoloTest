@@ -18,15 +18,16 @@ public class JenkinsBuild
     {
         EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.WSA, BuildTarget.WSAPlayer);
         EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
-        string target_dir = APP_NAME + ".app";
-        GenericBuild(TARGET_DIR + "/" + target_dir, BuildTarget.StandaloneWindows, BuildOptions.None);
+        string build_name = APP_NAME + ".app";
+        Debug.Log("Testing....");
+        GenericBuild(TARGET_DIR + "/" + build_name, BuildTarget.WSAPlayer, BuildOptions.None);
     }
 
     static void GenericBuild(string target_dir, BuildTarget build_target, BuildOptions build_options)
     {
         BuildPlayerOptions buildPlayerOptions = new BuildPlayerOptions();
         buildPlayerOptions.scenes = new[] { "Assets/Scenes/ChemClub.unity" };
-        buildPlayerOptions.locationPathName = "Assets/Builds/";
+        buildPlayerOptions.locationPathName = target_dir;
         buildPlayerOptions.target = BuildTarget.WSAPlayer;
         buildPlayerOptions.options = BuildOptions.None;
 
