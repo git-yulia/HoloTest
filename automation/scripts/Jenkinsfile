@@ -78,37 +78,37 @@ pipeline
       }
     }
 
-    // stage('Build')
-    // {
-    //   steps
-    //   {
-    //     script
-    //     {
-    //       String unity_path = ""
+    stage('Build')
+    {
+      steps
+      {
+        script
+        {
+          String unity_path = ""
 
-    //       if (params.Unity_Version == '2019.4.22f')
-    //       {
-    //         unity_path = UNITY_PATH_2019
-    //       }
-    //       else
-    //       {
-    //         unity_path = UNITY_PATH_2020
-    //       }
+          if (params.Unity_Version == '2019.4.22f')
+          {
+            unity_path = UNITY_PATH_2019
+          }
+          else
+          {
+            unity_path = UNITY_PATH_2020
+          }
 
-    //       String unity_cmd = "$unity_path -batchmode -nographics -quit -projectPath ${PROJECT_PATH}"
-    //       String logs_path = "${WORKSPACE}/automation/logs"
+          String unity_cmd = "$unity_path -batchmode -nographics -quit -projectPath ${PROJECT_PATH}"
+          String logs_path = "${WORKSPACE}/automation/logs"
 
-    //       //echo "Opening Unity project and switching the build target to UWP/WSAPlayer..."
+          //echo "Opening Unity project and switching the build target to UWP/WSAPlayer..."
 
-    //       // bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -executeMethod EditorUserBuildSettings.SwitchActiveBuildTarget BuildTargetGroup.WSA BuildTarget.WSAPlayer"
+          // bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -executeMethod EditorUserBuildSettings.SwitchActiveBuildTarget BuildTargetGroup.WSA BuildTarget.WSAPlayer"
 
-    //       echo "Building Unity project..."
+          echo "Building Unity project..."
 
-    //       bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -executeMethod JenkinsBuild.BuildOnWindows"
-    //       // ${JOB_NAME} ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/output
-    //     }
-    //   }
-    // }
+          bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -buildTarget WindowsStoreApps -executeMethod JenkinsBuild.BuildOnWindows"
+          // ${JOB_NAME} ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/output
+        }
+      }
+    }
 
     stage('Test')
     {

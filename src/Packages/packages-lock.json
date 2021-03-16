@@ -6,12 +6,6 @@
       "source": "local-tarball",
       "dependencies": {}
     },
-    "com.microsoft.azure.remote-rendering": {
-      "version": "file:MixedReality/com.microsoft.azure.remote-rendering-1.0.2.tgz",
-      "depth": 0,
-      "source": "local-tarball",
-      "dependencies": {}
-    },
     "com.microsoft.mixedreality.openxr": {
       "version": "file:MixedReality/com.microsoft.mixedreality.openxr-0.1.4.tgz",
       "depth": 0,
