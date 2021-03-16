@@ -33,10 +33,7 @@ pipeline
     UNITY_PATH_2020 = '\"C:\\Program Files\\Unity\\Hub\\Editor\\2020.3.0f1\\Editor\\Unity.exe\"'
     UNITY_PATH_2019 = '\"C:\\Program Files\\Unity\\Hub\\Editor\\2019.4.22f1\\Editor\\Unity.exe\"'
 
-    DISCORD_WEBHOOK = """
-    https://discordapp.com/api/webhooks/814714586397802507/7Ii7m9_
-    KzuO0P2T8EV8qem-UBy64sUu_Mpx9QfWzHTelq7YThfI3sClnAVwYQcAD4WTs
-    """
+    DISCORD_WEBHOOK = "https://discordapp.com/api/webhooks/814714586397802507/7Ii7m9_KzuO0P2T8EV8qem-UBy64sUu_Mpx9QfWzHTelq7YThfI3sClnAVwYQcAD4WTs"
   }
 
   stages
@@ -106,7 +103,7 @@ pipeline
             unity_path = UNITY_PATH_2020
           }
 
-          String unity_cmd = "${UNITY_PATH} -batchmode -nographics -projectPath ${PROJECT_PATH} -runTests"
+          String unity_cmd = "$unity_path -batchmode -nographics -projectPath ${PROJECT_PATH} -runTests"
           String logs_path = "${WORKSPACE}/automation/logs"
 
           catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE')
@@ -134,11 +131,7 @@ pipeline
       }
       steps
       {
-        discordSend webhookURL: "${DISCORD_WEBHOOK}", \
-        description: 'Pipeline Build', \
-        footer: "Footer Text", \
-        title: env.JOB_NAME, \
-        result: currentBuild.currentResult
+        discordSend webhookURL: "${DISCORD_WEBHOOK}", description: 'Pipeline Build', footer: "Footer Text", title: env.JOB_NAME, result: currentBuild.currentResult
         // link: env.BUILD_URL
 
         // Publish NUnit (UTF) test results
