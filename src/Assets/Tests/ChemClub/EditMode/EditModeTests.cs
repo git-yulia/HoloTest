@@ -2,8 +2,8 @@ using UnityEngine;
 using NUnit.Framework;
 using System.Collections;
 using UnityEngine.TestTools;
-using UnityEngine.SceneManagement;
-using UnityEditor.SceneManagement; 
+using UnityEditor.SceneManagement;
+using UnityEditor;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities.Editor;
@@ -12,15 +12,16 @@ namespace HoloTest_Namespace
 {
     public class EditModeTests
     {
-        [UnitySetUp]
         public void Setup()
         {
-            EditorSceneManager.LoadScene("ChemClub");
+            EditorSceneManager.OpenScene("Assets/Scenes/ChemClub.unity");
         }
 
         [Test]
+        // [UnityPlatform (RuntimePlatform.WindowsPlayer)]
         public void CheckCameraSettings()
         {
+            //EditorSceneManager.OpenScene("Assets/Scenes/ChemClub.unity");
             // Test that the camera has not been moved from the origin point. 
             GameObject go_MainCamera = GameObject.Find("main_camera");
             Assert.IsNotNull(go_MainCamera);
