@@ -2,13 +2,13 @@ pipeline
 {
   parameters 
   {
-    choice(name: 'DEMO_TYPE', choices: ['Failed build', 'Fixed build'], description: 'Stage a passing or failing build for the demo.')
+    choice(name: 'Demo_Type', choices: ['Passing build', 'Failing build'], description: 'Stage a passing or failing build for the demo.')
+    choice(name: 'Unity_Version', choices: ['2019.4.22f1', '2020.3.0f1'], description: 'Unity 2019 is recommended for full MRTK support.')
     booleanParam(name: 'Run_EditMode_Tests', defaultValue: true, description: 'Tests the game state prior to entering PlayMode.')
-    booleanParam(name: 'Run_PlayMode_Tests', defaultValue: true, description: 'Tests that require runtime (e.g. Update) or initialization (such as Awake).')
-    booleanParam(name: 'Run_PerceptionSim_Interface_Tests', defaultValue: true, description: 'Run the interface tests in the emulator.')
-    booleanParam(name: 'Run_Network_Comm_Tests', defaultValue: true, description: 'Run networked interface tests between simulated users.')
-    booleanParam(name: 'NOTIFY', defaultValue: true, description: 'Notify Discord channel of build status, and create Jira tickets for bugs.')
-    booleanParam(name: 'CLEAN', defaultValue: false, description: 'Deletes and re-clones the repository before running this build.')
+    //booleanParam(name: 'Run_PlayMode_Tests', defaultValue: true, description: 'Tests that require runtime (e.g. Update) or initialization (such as Awake).')
+    //booleanParam(name: 'Run_PerceptionSim_Interface_Tests', defaultValue: true, description: 'Run the interface tests in the emulator.')
+    booleanParam(name: 'Notify', defaultValue: true, description: 'Notify Discord channel of build status, and create Jira tickets for bugs.')
+    booleanParam(name: 'Clean', defaultValue: false, description: 'Deletes and re-clones the repository before running this build.')
   }
 
   agent
@@ -28,11 +28,10 @@ pipeline
 
   environment
   {
-  //    PATH = "C:\\Program Files\\Git\\usr\\bin;C:\\Program Files\\Git\\bin;${env.PATH}"
-
     // Paths are relative to custom workspace 
     PROJECT_PATH = '.\\src'
-    UNITY_PATH = '\"C:\\Program Files\\Unity\\Hub\\Editor\\2020.3.0f1\\Editor\\Unity.exe\"'
+    UNITY_PATH_2020 = '\"C:\\Program Files\\Unity\\Hub\\Editor\\2020.3.0f1\\Editor\\Unity.exe\"'
+    UNITY_PATH_2019 = '\"C:\\Program Files\\Unity\\Hub\\Editor\\2019.4.22f1\\Editor\\Unity.exe\"'
 
     DISCORD_WEBHOOK = """
     https://discordapp.com/api/webhooks/814714586397802507/7Ii7m9_
@@ -57,7 +56,7 @@ pipeline
     {
       when
       {
-        expression { return params.CLEAN }
+        expression { return params.Clean }
       }
       steps
       {
@@ -76,15 +75,17 @@ pipeline
 
         script
         {
-          // Set Jenkins build name to the commit SHA
-          // def git_cmd = "git log -n 1"
-          // def sha = bat(returnStdout: true, script: "${git_cmd}").trim()
-          // def sha_start_index = sha.indexOf("${git_cmd}")// + ("${git_cmd}".length())
-          // sha = sha.substring(sha_start_index, 5)
-
           currentBuild.displayName = "Build title"
           currentBuild.description = "Add a description."
         }
+      }
+    }
+
+    stage('Build')
+    {
+      steps
+      {
+        echo 'none yet'
       }
     }
 
@@ -94,6 +95,17 @@ pipeline
       {
         script 
         {
+          String unity_path = ""
+
+          if (params.Unity_Version == '2019.4.22f')
+          {
+            unity_path = UNITY_PATH_2019
+          }
+          else
+          {
+            unity_path = UNITY_PATH_2020
+          }
+
           String unity_cmd = "${UNITY_PATH} -batchmode -nographics -projectPath ${PROJECT_PATH} -runTests"
           String logs_path = "${WORKSPACE}/automation/logs"
 
@@ -118,7 +130,7 @@ pipeline
     {
       when 
       {
-        expression { return params.NOTIFY }
+        expression { return params.Notify }
       }
       steps
       {

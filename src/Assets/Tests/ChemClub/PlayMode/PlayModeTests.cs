@@ -21,9 +21,32 @@ namespace HoloTest_Namespace
         public void Setup()
         {
             SceneManager.LoadScene("ChemClub");
+            Debug.Log("Called setup and loaded the scene");
         }
 
         [UnityTest]
+        public IEnumerator Slider_TurnFlameOff()
+        {
+            int pause_time = 2;
+            SceneManager.LoadScene("ChemClub");
+
+            GameObject slider_object = GameObject.Find("PinchSlider");
+            SliderLogic slider_script = slider_object.GetComponent<SliderLogic>();
+            PinchSlider slider_ux = slider_object.GetComponent<PinchSlider>();
+
+            GameObject fire_object = GameObject.Find("fire_particle_system");
+            FireHandler fire_handler = fire_object.GetComponent<FireHandler>(); 
+
+            slider_ux.SliderValue = 3;
+            yield return new WaitForSeconds(pause_time);
+            var current_height = fire_handler.GetFlameHeight();
+
+            // At this point, the flame height should be non-zero
+            Assert.GreaterOrEqual(current_height, 0.001);
+        }
+
+        #region FutureTests
+        [UnityTest, Ignore("Not implemented yet.")]
         public IEnumerator CheckFramerate()
         {
             GameObject go_camera = GameObject.Find("main_camera");
@@ -42,7 +65,7 @@ namespace HoloTest_Namespace
         /// Box with disabled gravity should travel a certain distance 
         /// when being released from grab during hand movement. 
         ///
-        [UnityTest]
+        [UnityTest, Ignore("Not implemented yet.")]
         public IEnumerator ObjectManipulatorThrow()
         {
             yield return null;
@@ -50,12 +73,13 @@ namespace HoloTest_Namespace
 
         // Check that the correct profile is being used. 
         // This profile is optimized for the HoloLens 2. 
-        [Test]
+        [Test, Ignore("Not implemented yet.")]
         public void CheckConfigProfile()
         {
             string profile_path = "Assets/CustomProfiles/HoloLens2_Optimized_Profile.asset";
             var optimized_profile = AssetDatabase.LoadAssetAtPath<MixedRealityToolkitConfigurationProfile>(profile_path);
             Assert.AreEqual(optimized_profile, MixedRealityToolkit.Instance.ActiveProfile);
         }
+        #endregion
     }
 }

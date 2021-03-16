@@ -14,13 +14,7 @@ namespace HoloTest_Namespace
         [UnitySetUp]
         public void Setup()
         {
-            // Need to have the right scene open in the editor:
             SceneManager.LoadScene("ChemClub");
-        }
-
-        [UnityTearDown]
-        public void TearDown()
-        {
         }
 
         [Test]
