@@ -5434,7 +5434,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4d4b89d327fcd4593ec05016c2969e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  this_object: {fileID: 510058890}
 --- !u!1 &554498962
 GameObject:
   m_ObjectHideFlags: 0
@@ -10261,7 +10260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4d4b89d327fcd4593ec05016c2969e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  this_object: {fileID: 554498962}
 --- !u!1 &612723336
 GameObject:
   m_ObjectHideFlags: 0
@@ -10349,7 +10347,7 @@ Camera:
   m_GameObject: {fileID: 667095495}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -15980,7 +15978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd4d4b89d327fcd4593ec05016c2969e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  this_object: {fileID: 1337304016}
 --- !u!4 &1400452711 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8b9617ee77e25954f9ef63d0afaff9aa, type: 3}
@@ -16376,7 +16373,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d9acc7968244a8886f3af591305bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeProfile: {fileID: 11400000, guid: d9ca069c41226264db0ca3b83fbaeba6, type: 2}
+  activeProfile: {fileID: 11400000, guid: 1e3716acf2b8f684aba2d69548e29c52, type: 2}
 --- !u!4 &1839028543
 Transform:
   m_ObjectHideFlags: 0
