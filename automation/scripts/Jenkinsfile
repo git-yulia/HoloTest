@@ -127,7 +127,8 @@ pipeline
             unity_path = UNITY_PATH_2020
           }
 
-          String unity_cmd = "$unity_path -batchmode -nographics -projectPath ${PROJECT_PATH} -runTests"
+          // -nographics
+          String unity_cmd = "$unity_path -batchmode -projectPath ${PROJECT_PATH} -runTests"
           String logs_path = "${WORKSPACE}/automation/logs"
 
           // SWITCH PLATFORM FIRST 
