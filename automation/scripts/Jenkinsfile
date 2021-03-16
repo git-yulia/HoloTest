@@ -100,7 +100,7 @@ pipeline
 
           echo "Building Unity project..."
 
-          bat "$unity_cmd JenkinsBuild.Build ${JOB_NAME} ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/output"
+          bat "$unity_cmd JenkinsBuild.BuildOnWindows ${JOB_NAME} ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_NUMBER}/output"
         }
       }
     }
