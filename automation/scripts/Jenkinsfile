@@ -7,6 +7,7 @@ pipeline
     booleanParam(name: 'Run_PlayMode_Tests', defaultValue: true, description: 'Tests aspects of the game that require runtime.')
     booleanParam(name: 'Notify', defaultValue: true, description: 'Notify Discord channel of build status, and create Jira tickets for bugs.')
     booleanParam(name: 'Build', defaultValue: false, description: 'Full build, takes a long time.')
+    choice(name: 'Build_Platform', choices: ['Universal Windows Platform'])
     booleanParam(name: 'Clean', defaultValue: false, description: 'Deletes and re-clones the repository before running this build.')
   }
 
@@ -31,7 +32,6 @@ pipeline
     PROJECT_PATH = '.\\src'
     UNITY_PATH_2020 = '\"C:\\Program Files\\Unity\\Hub\\Editor\\2020.3.0f1\\Editor\\Unity.exe\"'
     UNITY_PATH_2019 = '\"C:\\Program Files\\Unity\\Hub\\Editor\\2019.4.22f1\\Editor\\Unity.exe\"'
-
     DISCORD_WEBHOOK = "https://discordapp.com/api/webhooks/814714586397802507/7Ii7m9_KzuO0P2T8EV8qem-UBy64sUu_Mpx9QfWzHTelq7YThfI3sClnAVwYQcAD4WTs"
   }
 
@@ -57,11 +57,6 @@ pipeline
         git branch: 'main',
         credentialsId: 'GitHub',
         url: 'https://github.com/git-yulia/HoloTest.git/'
-
-        script
-        {
-          currentBuild.description = "Add a description."
-        }
       }
     }
 
@@ -76,7 +71,6 @@ pipeline
         script
         {
           String unity_path = ""
-
           if (params.Unity_Version == '2019.4.22f')
           {
             unity_path = UNITY_PATH_2019
@@ -89,9 +83,7 @@ pipeline
           String unity_cmd = "$unity_path -batchmode -nographics -quit -projectPath ${PROJECT_PATH}"
           String logs_path = "${WORKSPACE}/automation/logs"
 
-          echo "Building Unity project..."
-
-          bat "${UNITY_PATH_2020} -batchmode -nographics -quit -projectPath ${PROJECT_PATH} -buildTarget WindowsStoreApps -executeMethod JenkinsBuild.BuildOnWindows"
+          bat "$unity_cmd -buildTarget WindowsStoreApps -executeMethod JenkinsBuild.BuildOnWindows"
           
         }
       }
@@ -114,7 +106,6 @@ pipeline
             unity_path = UNITY_PATH_2020
           }
 
-          // -nographics
           String unity_cmd = "$unity_path -batchmode -projectPath ${PROJECT_PATH} -runTests"
           String logs_path = "${WORKSPACE}/automation/logs"
 

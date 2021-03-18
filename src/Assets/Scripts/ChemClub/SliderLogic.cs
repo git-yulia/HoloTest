@@ -15,28 +15,13 @@ namespace HoloTest_Namespace
     [AddComponentMenu("Fire particle system configuration")]
     public class SliderLogic : MonoBehaviour
     {
-        [Header("Fire Handler")]
+        [Header("Bunsen Burner GameObject")]
         [SerializeField]
-        [Tooltip("Select the Particle System handler script")]
-        private GameObject fire_particle_system = null;
-
-        // temp for other 2 burners
-        [Header("Fire Handler2")]
-        [SerializeField]
-        [Tooltip("Select the Particle System handler script")]
-        private GameObject fire_particle_system_2 = null;
-        [Header("Fire Handler3")]
-        [SerializeField]
-        [Tooltip("Select the Particle System handler script")]
-        private GameObject fire_particle_system_3 = null;
+        private GameObject bunsenBurner = null;
 
         #region Private Members
         private PinchSlider slider;
-        private FireHandler fire_handler;
-
-        // temp 
-        private FireHandler fire_handler_2;
-        private FireHandler fire_handler_3;
+        private FireHandler fireHandlerScript;
         #endregion
 
         void Start()
@@ -46,20 +31,12 @@ namespace HoloTest_Namespace
             slider.OnInteractionEnded.AddListener(OnInteractionEnded);
             slider.OnValueUpdated.AddListener(OnValueUpdated);
 
-            fire_handler = fire_particle_system.GetComponent<FireHandler>();
-
-            // Testing on the other 2 burners
-            fire_handler_2 = fire_particle_system_2.GetComponent<FireHandler>();
-            fire_handler_3 = fire_particle_system_3.GetComponent<FireHandler>();
+            fireHandlerScript = bunsenBurner.GetComponent<FireHandler>();
         }
 
         private void OnValueUpdated(SliderEventData eventData)
         {
-            fire_handler.SetFlameHeightUsingSlider(slider.SliderValue);
-
-            // Testing on the other 2 burners
-            fire_handler_2.SetFlameHeightUsingSlider(slider.SliderValue);
-            fire_handler_3.SetFlameHeightUsingSlider(slider.SliderValue);
+            fireHandlerScript.SetFlameHeightUsingSlider(slider.SliderValue);
         }
 
         private void OnInteractionEnded(SliderEventData arg0)
