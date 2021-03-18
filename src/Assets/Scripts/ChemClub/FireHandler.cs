@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,7 +20,10 @@ namespace HoloTest_Namespace
         #region Private Members
         private ParticleSystem fire;
         private ParticleSystem.Particle[] fireParticles;
-        private GameObject activeFirePrefab; 
+        private GameObject activeFirePrefab;
+        private GameObject saved_firePrefabRed;
+        private GameObject saved_firePrefabBlue;
+        private GameObject saved_firePrefabMixedLow;
         #endregion
 
         private void Start()
@@ -30,40 +34,75 @@ namespace HoloTest_Namespace
 
             // Get current location of burner
             Vector3 burnerLocation = gameObject.transform.position;
-            Vector3 burnerSize = gameObject.GetComponent<Collider>().bounds.size;
             Vector3 flamePlacement = burnerLocation;
-            flamePlacement.y += 0.74f; 
+            flamePlacement.y += 0.74f;
 
-            activeFirePrefab = Instantiate(firePrefabMixedLow, flamePlacement, Quaternion.identity);
+            // Initiate all 3 animation types and save handles to them.
+            saved_firePrefabRed = Instantiate(firePrefabRed, flamePlacement, Quaternion.identity);
+            saved_firePrefabRed.SetActive(false); 
+            saved_firePrefabBlue = Instantiate(firePrefabBlue, flamePlacement, Quaternion.identity);
+            saved_firePrefabBlue.SetActive(false);
+            saved_firePrefabMixedLow = Instantiate(firePrefabMixedLow, flamePlacement, Quaternion.identity);
+            saved_firePrefabMixedLow.SetActive(false);
 
-            fire = activeFirePrefab.GetComponent<ParticleSystem>();
-            fireParticles = new ParticleSystem.Particle[fire.main.maxParticles];
+            // Set default fire prefab
+            activeFirePrefab = firePrefabMixedLow; 
 
-            SetFireAnimation(firePrefabBlue);
-
+            SetFireAnimation(saved_firePrefabMixedLow);
             SetFlameHeight(0);
         }
 
-        public IEnumerator SetFireAnimation(GameObject firePrefab)
+        public void GetFireState(out int fireType, out float fireHeight)
         {
-            yield return new WaitForSeconds(3); 
+            fireType = 0;
+            fireHeight = 0;
 
-            // Deactivate the old prefab if it exists
-            if (activeFirePrefab != null)
+            fireHeight = GetFlameHeight(); 
+
+            if (activeFirePrefab == saved_firePrefabMixedLow)
             {
-                activeFirePrefab.SetActive(false);
+                fireType = 0; 
             }
-
-            // Activate the instance if it is already in the scene
-            if (GameObject.Find(firePrefab.name))
+            else if (activeFirePrefab == saved_firePrefabRed)
             {
-                firePrefab.SetActive(true);
+                fireType = 1;
             }
             else
             {
-                Vector3 burnerLocation = gameObject.transform.position;
-                Vector3 flamePlacement = burnerLocation;
-                activeFirePrefab = Instantiate(firePrefab, flamePlacement, Quaternion.identity);
+                fireType = 2; 
+            }
+        }
+
+        public void SetFireAnimation(GameObject firePrefab)
+        {
+            Debug.Log("set fire animation to " + firePrefab.name);
+
+            // Deactivate the current fire animation
+            activeFirePrefab.SetActive(false);
+
+            firePrefab.SetActive(true);
+
+            activeFirePrefab = firePrefab;
+            activeFirePrefab.SetActive(true); 
+
+            // Update active particle system
+            fire = activeFirePrefab.GetComponent<ParticleSystem>();
+            fireParticles = new ParticleSystem.Particle[fire.main.maxParticles];
+        }
+
+        public void PlayNextAnimation()
+        {
+            if (activeFirePrefab == saved_firePrefabMixedLow)
+            {
+                SetFireAnimation(saved_firePrefabRed);
+            }
+            else if (activeFirePrefab == saved_firePrefabRed)
+            {
+                SetFireAnimation(saved_firePrefabBlue);
+            }
+            else if (activeFirePrefab == saved_firePrefabBlue)
+            {
+                SetFireAnimation(saved_firePrefabMixedLow);
             }
         }
 

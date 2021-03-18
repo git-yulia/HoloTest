@@ -7,14 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: glass_01
+  m_Name: glass_02
   m_Shader: {fileID: 4800000, guid: 5bdea20278144b11916d77503ba1467a, type: 3}
   m_ShaderKeywords: _ALPHABLEND_ON _DIRECTIONAL_LIGHT _DISABLE_ALBEDO_MAP _HOVER_LIGHT
     _REFLECTIONS _REFRACTION _SPECULAR_HIGHLIGHTS _SPHERICAL_HARMONICS
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 3000
+  m_CustomRenderQueue: 99
   stringTagMap:
     RenderType: Fade
   disabledShaderPasses: []
@@ -119,7 +119,7 @@ Material:
     - _IridescenceAngle: -0.78
     - _IridescenceIntensity: 0.5
     - _IridescenceThreshold: 0.05
-    - _Metallic: 0.891
+    - _Metallic: 0.785
     - _MipmapBias: -2
     - _Mode: 5
     - _NearLightFade: 0
@@ -154,13 +154,13 @@ Material:
     - _VertexExtrusion: 0
     - _VertexExtrusionSmoothNormals: 0
     - _VertexExtrusionValue: 0
-    - _ZOffsetFactor: 0
-    - _ZOffsetUnits: 0
-    - _ZTest: 8
+    - _ZOffsetFactor: 2.25
+    - _ZOffsetUnits: 1
+    - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
-    - _ClippingBorderColor: {r: 1, g: 0.19999996, b: 0, a: 1}
-    - _Color: {r: 0.3962264, g: 0.3962264, b: 0.3962264, a: 0.40392157}
+    - _ClippingBorderColor: {r: 1, g: 0.19999993, b: 0, a: 1}
+    - _Color: {r: 0.4716981, g: 0.4716981, b: 0.4716981, a: 0.40392157}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 1}
     - _EnvironmentColorX: {r: 1, g: 0, b: 0, a: 1}

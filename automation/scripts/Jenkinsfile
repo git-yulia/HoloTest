@@ -2,7 +2,7 @@ pipeline
 {
   parameters 
   {
-    choice(name: 'Unity_Version', choices: ['2020.3.0f1', '2019.4.22f1'], description: 'Unity 2019 is recommended for full MRTK support.')
+    choice(name: 'Unity_Version', choices: ['2020.3.0f1', '2019.4.22f1'])
     booleanParam(name: 'Run_EditMode_Tests', defaultValue: true, description: 'Tests the game state prior to entering PlayMode.')
     booleanParam(name: 'Run_PlayMode_Tests', defaultValue: true, description: 'Tests aspects of the game that require runtime.')
     booleanParam(name: 'Notify', defaultValue: true, description: 'Notify Discord channel of build status, and create Jira tickets for bugs.')
@@ -138,9 +138,6 @@ pipeline
 
         // discordSend webhookURL: "${DISCORD_WEBHOOK}", description: 'Pipeline Build', footer: "Footer Text", title: env.JOB_NAME, result: currentBuild.currentResult
         // link: env.BUILD_URL
-
-        // Publish NUnit (UTF) test results
-        // nunit testResultsPattern: "${WORKSPACE}/automation/logs/editmodetests.xml"
       }
     }
   }
