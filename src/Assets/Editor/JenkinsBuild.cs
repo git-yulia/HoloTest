@@ -16,7 +16,6 @@ public class JenkinsBuild
 
     public static void BuildOnWindows()
     {
-        // EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.WSA, BuildTarget.WSAPlayer);
         EditorApplication.ExecuteMenuItem("Assets/Open C# Project");
         string build_name = APP_NAME + ".app";
         Debug.Log("Testing....");

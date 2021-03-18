@@ -20,11 +20,8 @@ namespace HoloTest_Namespace
         private GameObject go_SceneLogic;
         private SceneLogic SceneLogicScript;
 
-        // [UnitySetUp]
         public void Setup() 
         {
-            //EditorSceneManager.OpenScene("Assets/Scenes/ChemClub.unity");
-            //SceneManager.LoadScene("ChemClub");
             Debug.Log("Called setup from here and loaded the scene");
             var active_scene = SceneManager.GetActiveScene();
             Debug.Log("active scene is currently: " + active_scene.name);
