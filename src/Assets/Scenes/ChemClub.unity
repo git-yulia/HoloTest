@@ -358,7 +358,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3885370230430447826, guid: 36ff76a9e7929f342915274725573e00, type: 3}
       propertyPath: m_Name
-      value: PressableButtonHoloLens2_48x48
+      value: pressableButton
       objectReference: {fileID: 0}
     - target: {fileID: 3885370230883199266, guid: 36ff76a9e7929f342915274725573e00, type: 3}
       propertyPath: m_text
@@ -395,6 +395,10 @@ PrefabInstance:
     - target: {fileID: 3885370232023760435, guid: 36ff76a9e7929f342915274725573e00, type: 3}
       propertyPath: m_LocalScale.y
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3885370232023760435, guid: 36ff76a9e7929f342915274725573e00, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4.55
       objectReference: {fileID: 0}
     - target: {fileID: 3885370232023760435, guid: 36ff76a9e7929f342915274725573e00, type: 3}
       propertyPath: m_LocalPosition.x
@@ -449,7 +453,15 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
@@ -457,15 +469,35 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 711907396}
     - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 996848912}
+    - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: PlayNextAnimation
+      objectReference: {fileID: 0}
+    - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: OnAnimationChange
       objectReference: {fileID: 0}
     - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: HoloTest_Namespace.FireHandler, ChemClubAssembly
       objectReference: {fileID: 0}
     - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: HoloTest_Namespace.SliderLogic, ChemClubAssembly
+      objectReference: {fileID: 0}
+    - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
       propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5956172336509982321, guid: 36ff76a9e7929f342915274725573e00, type: 3}
+      propertyPath: OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 6906603868331807467, guid: 36ff76a9e7929f342915274725573e00, type: 3}
@@ -582,7 +614,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &461659292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -599,7 +631,7 @@ MonoBehaviour:
   goal1: {fileID: 2800000, guid: 6bc9c48132c746944a618dca2def0cd6, type: 3}
   goal2: {fileID: 2800000, guid: 1f5a740159910b545abc3d2e2481ee4f, type: 3}
   goal3: {fileID: 2800000, guid: 043f616fa6f4ff8478aa770b5fe88a6f, type: 3}
-  bunsenBurner_GameObject: {fileID: 711907395}
+  burner: {fileID: 711907395}
 --- !u!4 &461659293
 Transform:
   m_ObjectHideFlags: 0
@@ -1029,6 +1061,7 @@ MonoBehaviour:
   firePrefabRed: {fileID: 1789054002034311079, guid: 023a6c05bdd925a4d9fa929c5075ac09, type: 3}
   firePrefabBlue: {fileID: 5513986671103147865, guid: 073af1187866c8044aed8b6972cba0b0, type: 3}
   firePrefabMixedLow: {fileID: 8655873280055441678, guid: 4bfe042f88b911f4680bd682019e292b, type: 3}
+  sliderScaleFactor: 0.2
 --- !u!65 &711907399
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2076,11 +2109,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 22fdcbed2ca3bd942a994762792f77cb, type: 2}
     - target: {fileID: 7307063430134822103, guid: 1093263a89abe47499cccf7dcb08effb, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.89
+      value: 0.73
       objectReference: {fileID: 0}
     - target: {fileID: 7307063430134822103, guid: 1093263a89abe47499cccf7dcb08effb, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.86
+      value: 0.67
       objectReference: {fileID: 0}
     - target: {fileID: 7307063430134822103, guid: 1093263a89abe47499cccf7dcb08effb, type: 3}
       propertyPath: m_LocalScale.z
@@ -2100,11 +2133,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7307063430618434848, guid: 1093263a89abe47499cccf7dcb08effb, type: 3}
       propertyPath: sliderEndDistance
-      value: 0.034999996
+      value: 0.03499999
       objectReference: {fileID: 0}
     - target: {fileID: 7307063430618434848, guid: 1093263a89abe47499cccf7dcb08effb, type: 3}
       propertyPath: sliderStartDistance
-      value: -0.034999996
+      value: -0.03499999
       objectReference: {fileID: 0}
     - target: {fileID: 7307063430618434848, guid: 1093263a89abe47499cccf7dcb08effb, type: 3}
       propertyPath: OnValueUpdated.m_PersistentCalls.m_Calls.Array.size

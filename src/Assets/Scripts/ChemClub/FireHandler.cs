@@ -17,6 +17,8 @@ namespace HoloTest_Namespace
         public GameObject firePrefabBlue;
         public GameObject firePrefabMixedLow;
 
+        public float sliderScaleFactor = 0.2f; 
+
         #region Private Members
         private ParticleSystem fire;
         private ParticleSystem.Particle[] fireParticles;
@@ -46,9 +48,11 @@ namespace HoloTest_Namespace
             saved_firePrefabMixedLow.SetActive(false);
 
             // Set default fire prefab
-            activeFirePrefab = firePrefabMixedLow; 
-
+            activeFirePrefab = firePrefabMixedLow;
+            activeFirePrefab.SetActive(true);
             SetFireAnimation(saved_firePrefabMixedLow);
+            fire = activeFirePrefab.GetComponent<ParticleSystem>();
+            fireParticles = new ParticleSystem.Particle[fire.main.maxParticles];
             SetFlameHeight(0);
         }
 
@@ -75,8 +79,6 @@ namespace HoloTest_Namespace
 
         public void SetFireAnimation(GameObject firePrefab)
         {
-            Debug.Log("set fire animation to " + firePrefab.name);
-
             // Deactivate the current fire animation
             activeFirePrefab.SetActive(false);
 
@@ -114,6 +116,11 @@ namespace HoloTest_Namespace
             return main.startLifetime.constant;
         }
 
+        public bool isFireEmitting()
+        {
+            return fire.isEmitting; 
+        }
+
         public void SetFlameHeight(float goalHeight)
         {
             if (goalHeight < 0.001)
@@ -138,7 +145,7 @@ namespace HoloTest_Namespace
 
         public void SetFlameHeightUsingSlider(float sliderValue)
         {
-            SetFlameHeight(sliderValue * 0.2f);
+            SetFlameHeight(sliderValue * sliderScaleFactor);
         }
 
         public void ToggleBurner(bool toggleValue)

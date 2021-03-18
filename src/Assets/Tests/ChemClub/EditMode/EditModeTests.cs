@@ -43,7 +43,20 @@ namespace HoloTest_Namespace
         }
 
         [Test]
-        public void CheckCameraSettings()
+        public void CheckBurnerSize()
+        {
+            // Test that the camera has not been moved from the origin point. 
+            EditorSceneManager.OpenScene("Assets/Scenes/ChemClub.unity");
+            GameObject burner = GameObject.Find("bunsen_burner");
+            Assert.IsNotNull(burner);
+
+            Renderer renderer = burner.GetComponent<Renderer>();
+            float burnerHeight = renderer.transform.localScale.y;
+            Assert.GreaterOrEqual(burnerHeight, 0.1);
+        }
+
+        [Test]
+        public void CheckInitialCameraSettings()
         {
             // Test that the camera has not been moved from the origin point. 
             EditorSceneManager.OpenScene("Assets/Scenes/ChemClub.unity");

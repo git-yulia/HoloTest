@@ -34,9 +34,8 @@ namespace HoloTest_Namespace
             int fireType = 0;
             float fireHeight = 0.0f;
 
-            // fireHandlerScript.GetFlameHeight(); 
-
-           // fireHandlerScript.GetFireState(out fireType, out fireHeight);
+            fireHandlerScript = burner.GetComponent<FireHandler>();
+            fireHandlerScript.GetFireState(out fireType, out fireHeight);
 
             if (fireType != currentGoalNumber)
             {

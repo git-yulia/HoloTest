@@ -34,6 +34,22 @@ namespace HoloTest_Namespace
             fireHandlerScript = bunsenBurner.GetComponent<FireHandler>();
         }
 
+        public float GetSliderValue()
+        {
+            return slider.SliderValue;
+        }
+
+        public void SetSliderValue(float sliderValue)
+        {
+            slider.SliderValue = sliderValue;
+            fireHandlerScript.SetFlameHeightUsingSlider(slider.SliderValue);
+        }
+
+        public void OnAnimationChange()
+        {
+            fireHandlerScript.SetFlameHeightUsingSlider(slider.SliderValue);
+        }
+
         private void OnValueUpdated(SliderEventData eventData)
         {
             fireHandlerScript.SetFlameHeightUsingSlider(slider.SliderValue);
