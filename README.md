@@ -39,7 +39,7 @@ Examples of things that are testable in Play mode:
 
 Anything that is scriptable is fair game. PlayMode tests are extremely powerful, and all of the heavy lifting - such as scene management and MRTK configuration - can be tucked away into a test suite's Setup & TearDown functions. 
 
-## Future Work
+## Future Work - estimated to be prototyped by 3/28
 
 - Create or recycle a PlayMode test utility. You can test MRTK input simulation in PlayMode, but there is a lot of setup and teardown involved. I made the mistake of simply calling PlayModeTestUtilities.Setup while prototyping these tests. I'm pretty sure that utility was made exclusively for MRTK developers - not for MRTK end users. (For example, it doesn't look like their Setup function allows you to load an existing scene. Leads me to believe it is just an internal utility.) A bit of investigation is needed to find the best way to repurpose this code. 
 - Once the setup/teardown is ready - add examples that utilize that. 
