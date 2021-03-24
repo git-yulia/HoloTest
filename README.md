@@ -1,18 +1,20 @@
 # HoloTest
 
-Greetings! This repository shows how you can set up automated unit testing for a Unity project that uses Mixed Reality Toolkit. There is a demo Unity project in src/ which simply provides something to test. 
+Greetings! This repository shows how you can set up automated unit testing for Unity and the Mixed Reality Toolkit. There is a demo Unity project in the src/ folder which simply provides something to test. 
 
 ## Ingredients
 
-- Unity 2020.3.0f1 (should also work with 2019.3+, untested for this project)
+- Unity 2020.3.0f1 (should work with 2019.3+ too - untested)
 - MRTK 2.6.1
-- (optional) Jenkins 2.283 (.284 broke some plugins for me)
+- (optional) Jenkins 2.283 (v.284 broke some plugins for me)
 
 ## Unity Test Framework
 
-You can explore this framework through the Test Runner window in Unity. There are two main types of tests that you can create:
+You can explore this framework through the Test Runner window in Unity. There are two main types of tests that you can create - edit mode and play mode tests. 
 
-1. Edit mode tests - can be used to run tests inside the Unity Editor or using Editor code. I've included a few examples in this repository, but you can find many awesome tests in the MRTK Test packages. 
+### Edit Mode Testing Overview
+
+These tests run inside the Unity Editor, or use Editor code. I've included a few examples in this repository, but you can find many awesome tests in the MRTK Test packages. (MixedRealityToolkit.Tests.EditMode)
 
 Examples of things that are testable in Edit mode: 
 
@@ -20,20 +22,29 @@ Examples of things that are testable in Edit mode:
 - Checking assets, game objects, and initial properties of things
 - Calculations that don't require runtime objects or behavior
 
-And basically anything else that is scriptable. Edit mode tests are also ultra-quick to run.
+Edit mode tests are also ultra-quick to run.
 
-2. Play mode tests - exactly what it sounds like: tests that require runtime. They take a bit longer to run, especially if you are loading scenes and creating game objects. 
+### Play Mode Testing Overview
+
+This is exactly what it sounds like: runtime testing. These tests take longer to run, especially if you are loading complex scenes and creating new game objects. 
 
 Examples of things that are testable in Play mode: 
 
 - MRTK interactions (especially using the kit's UX prefabs)
-- Configuration profile switching at runtime (see MixedRealityToolkit game object for details)
+- Configuration profile switching at runtime (attached to the MixedRealityToolkit game object)
 - Interactable event tests - toggle, click, etc. 
 - Shader tests
 - Animations
 - Particle Systems
 
-Again, anything that is scriptable is fair game. PlayMode tests are extremely powerful, and all of the heavy lifting - such as scene management and MRTK configuration - can be tucked away into the test suite's Setup & TearDown functions. 
+Anything that is scriptable is fair game. PlayMode tests are extremely powerful, and all of the heavy lifting - such as scene management and MRTK configuration - can be tucked away into a test suite's Setup & TearDown functions. 
+
+## Future Work
+
+- Create or recycle a PlayMode test utility. You can test MRTK input simulation in PlayMode, but there is a lot of setup and teardown involved. I made the mistake of simply calling PlayModeTestUtilities.Setup while prototyping these tests. I'm pretty sure that utility was made exclusively for MRTK developers - not for MRTK end users. (For example, it doesn't look like their Setup function allows you to load an existing scene. Leads me to believe it is just an internal utility.) A bit of investigation is needed to find the best way to repurpose this code. 
+- Once the setup/teardown is ready - add examples that utilize that. 
+- PerceptionSimulation tests - still need to convince Unity to work with me on this. 
+- Jenkins should show you the test results. NUnit does not seem to like that I am claiming that Unity test results are the same as NUnit test results. Some formatting is needed, probably. (For now, I view test results through the build logs folder mentioned in the Jenkinsfile.)
 
 ----
 
@@ -43,9 +54,11 @@ I've included these steps for future reference, but naturally, you do not need t
 
 All of the Jenkins steps are grouped into a Pipeline script named Jenkinsfile. (Pipeline is a DSL based on Groovy, I think.) This script interacts with the suite of plugins installed on the server. Pipelines can be as simple or powerful as the user wants, and can pretty much do anything, which is awesome. 
 
-There is also a build script called JenkinsBuild.cs. Jenkins and Unity use this file to build the project - see the Build stage in the Jenkinsfile for more information. 
+There is also a build script called JenkinsBuild.cs. 
 
-Note: it looks like you need to pass in the test platform through Jenkins, not through the CS build script (this is not an option for batchmode Unity as far as I can tell).
+Jenkins and Unity use this file to build the project - see the 'Build' stage in the Jenkinsfile for more information. 
+
+Note: it looks like you need to pass in the test platform through Jenkins, and not through the CSharp build script. This is not an option for batchmode Unity as far as I can tell.
 
 ### Assumptions
 - The Jenkinsfile assumes the source code is hosted on GitHub. This can be configured in the Checkout stage. 
@@ -61,20 +74,16 @@ Inside Jenkins, install the required plugins:
 7. xUnit
 8. Workspace Cleanup
 
-I've also included a full list of plugins installed on my server (in this repo's automation directory). 
-There are a lot of Jenkins plugins, and many do similar things, so in retrospect it is hard to identify
-which ones are actually being utilized. 
+I've also included a full list of plugins that are installed on my server, in this repo's automation directory. 
+There are a lot of Jenkins plugins, and many do similar things, so in retrospect it is hard to identify which ones are actually being utilized.
+
+Other setup steps:
 
 - [Jenkinsfile] Check the Unity installations against those listed in the Environment section.
+- [CS Build Script] Change any parameters in here as needed. (Called JenkinsBuild.cs)
 - [Jenkinsfile] Change the Git URL in the Checkout stage to match the new source repository. 
 - [Jenkins Settings] Add user credentials, either as a direct account, or with SSH and a private key. 
-- [Jenkinsfile] Change credentialsId field to match the one you set in Jenkins. 
-- [Jenkins Settings] Set a custom workspace - some directory on the build machine.
+- [Jenkinsfile] Change 'credentialsId' field to match the one you set in Jenkins. 
+- [Jenkins Settings] Set up a custom workspace - some target directory on the build machine.
 
-----
-
-## Additional Resources
-
-EditMode vs. PlayMode Tests
-
-https://docs.unity3d.com/Packages/com.unity.test-framework@1.0/manual/edit-mode-vs-play-mode-tests.html
+There are some other Jenkins steps not included here. You would need to set up a Pipeline project, then tell Jenkins where to find the Jenkinsfile, etc. Since these are easy to find on the internet, I won't re-type them here, but let me know if you run into any trouble.
