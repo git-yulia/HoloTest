@@ -13,30 +13,40 @@ namespace HoloTest_Namespace
 {
     public class EditModeTests
     {
+        private const string testSceneName = "ChemClub";
+        private const string testScenePath = "Assets/Scenes/ChemClub.unity";
+
         /// <summary>
-        /// The SetUp function runs before any of the tests do. 
+        /// The Setup function runs before any of the tests do. 
         /// </summary>
         [SetUp]
         public void SetUp()
         {
             // Open the test scene used in this demo.
-            string sceneName = "Assets/Scenes/ChemClub.unity";
-            Scene scene = EditorSceneManager.OpenScene(sceneName);
+            EditorSceneManager.OpenScene(testScenePath);
         }
 
         /// <summary>
         /// Example that shows how you can open a specific scene 
-        /// in the Editor.
+        /// in the Editor and check that it is now the active scene.
         /// </summary>
         [Test]
-        public void CheckScenesOpenCorrectly()
+        public void OpenValidScene()
         {
-            string sceneName = "Assets/Scenes/ChemClub.unity";
-            Scene scene = EditorSceneManager.OpenScene(sceneName);
-            Assert.IsTrue(scene.IsValid());
+            Scene testScene = EditorSceneManager.OpenScene(testScenePath);
+            Assert.IsTrue(testScene.IsValid());
 
-            // As an example, you can check the inverse - that a 
-            // nonexistent scene does NOT open. 
+            var activeSceneName = EditorSceneManager.GetActiveScene().name; 
+            Assert.AreEqual(activeSceneName, testSceneName);
+        }
+
+        /// <summary>
+        /// As an example, you can check the opposite - that a 
+        /// nonexistent scene will not open. 
+        /// </summary>
+        [Test]
+        public void DoNotOpenInvalidScene()
+        {
             Scene fakeScene = new Scene();
             try
             {
@@ -50,11 +60,6 @@ namespace HoloTest_Namespace
             {
                 Assert.IsFalse(fakeScene.IsValid());
             }
-
-            // I open the swap scene here to check that SetUp is 
-            // indeed running before everything else does. 
-            Scene swapScene = EditorSceneManager.OpenScene("Assets/Scenes/SwapScene.unity");
-            Assert.IsTrue(swapScene.IsValid());
         }
 
         /// <summary>
@@ -68,7 +73,7 @@ namespace HoloTest_Namespace
             GameObject burner = GameObject.Find("bunsen_burner");
             Assert.IsNotNull(burner);
 
-            // You can also use other components, such as Colliders.
+            // You could use other components, such as Colliders.
             Renderer renderer = burner.GetComponent<Renderer>();
 
             // Transform.localScale corresponds to the scale values

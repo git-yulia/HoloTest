@@ -10,51 +10,23 @@ using UnityEditor.SceneManagement;
 using Microsoft.MixedReality.Toolkit;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Input;
-using Microsoft.MixedReality.Toolkit.Utilities;
 using Microsoft.MixedReality.Toolkit.Tests;
+using Microsoft.MixedReality.Toolkit.Utilities;
 
 namespace HoloTest_Namespace
 {
     public class PlayModeTests
     {
         private const string testSceneName = "ChemClub";
-        private const string configProfilePath = "Assets/MixedRealityToolkit.Generated/CustomProfiles";
-        private const string configProfileName = "/HoloTestConfigurationProfile.asset";
+        private const string testProfileName = "HoloTestConfigurationProfile";
 
-        /// <summary>
-        /// This setup function calls PlayModeTestUtilities 
-        /// from MRTK - but you can also create and call a 
-        /// custom Setup procedure. 
-        /// </summary>
+        #region Surprise Tools That Will Help Us Later
+        private const string testProfilePath = "Assets/MixedRealityToolkit.Generated/CustomProfiles" +
+                                               "/HoloTestConfigurationProfile.asset";
+        #endregion  
+
         [UnitySetUp]
         public IEnumerator Setup()
-        {
-            // The Setup function used here also takes an 
-            // optional argument for the MRTK configuration
-            // profile. This is super useful. 
-            //
-            // The test profile was cloned using the HLens2
-            // XR SDK profile, for context.
-
-            var profile = AssetDatabase.LoadAssetAtPath
-                          <MixedRealityToolkitConfigurationProfile>
-                          (configProfilePath + configProfileName); 
-
-            PlayModeTestUtilities.Setup(profile);
-            TestUtilities.PlayspaceToOriginLookingForward();
-            yield return null;
-        }
-
-        [UnityTearDown]
-        public IEnumerator TearDown()
-        {
-            PlayModeTestUtilities.TearDown();
-            yield return null;
-        }
-
-        #region Utilities
-
-        public IEnumerator LoadTestScene()
         {
             AsyncOperation loadOp = SceneManager.LoadSceneAsync(testSceneName);
             loadOp.allowSceneActivation = true;
@@ -65,7 +37,20 @@ namespace HoloTest_Namespace
             yield return true;
         }
 
-        #endregion
+        [UnityTearDown]
+        public IEnumerator TearDown()
+        {
+            Scene scene = SceneManager.GetSceneByName(testProfileName);
+            if (scene.isLoaded)
+            {
+                // Not sure why Unity requires empty scene to be created first - 
+                // need to investigate this. 
+                Scene playModeTestScene = SceneManager.CreateScene("Empty");
+                SceneManager.SetActiveScene(playModeTestScene);
+                SceneManager.UnloadSceneAsync(scene.buildIndex);
+            }
+            yield return null;
+        }
 
         [UnityTest, Ignore("This test should never run, on principle.")]
         public IEnumerator UnwantedTest()
@@ -82,35 +67,24 @@ namespace HoloTest_Namespace
         /// Checks the active Mixed Reality Toolkit configuration profile. 
         /// </summary>
         [UnityTest]
-        public IEnumerator CheckMixedRealityConfiguration()
+        public IEnumerator CheckMixedRealityConfigurationProfile()
         {
-            var profile = AssetDatabase.LoadAssetAtPath
-                          <MixedRealityToolkitConfigurationProfile>
-                          (configProfilePath + configProfileName);
+            var MRTK_gameObject = GameObject.Find("MixedRealityToolkit");
+            var activeProfile = MRTK_gameObject.GetComponent<MixedRealityToolkit>();
 
-            //Assert.IsNotNull(profile);
-            //Assert.IsTrue(profile);
+            Debug.Log("Active profile used in this scene - " + activeProfile.ActiveProfile.name);
+            Assert.AreEqual(activeProfile.ActiveProfile.name, testProfileName);
 
-            yield return null; 
-
-
-
-            /* yield return LoadTestScene();
-             var MRTK_gameObject = GameObject.Find("MixedRealityToolkit");
-             var configProfile = MRTK_gameObject.GetComponent<MixedRealityToolkit>();
-             Debug.Log("Active profile used in this scene - " + configProfile.ActiveProfile.name);
-             Assert.AreEqual(configProfile.ActiveProfile.name, "DefaultHololens2XRSDKConfigurationProfile");*/
+            yield return null;
         }
 
         /// <summary>
-        /// This example shows how you can test an MRTK pinch slider
-        /// and some game object that should react to that input. 
+        /// This example tests scripts attached to GameObjects - 
+        /// in this case, the burner and an MRTK PinchSlider.
         /// </summary>
-        [UnityTest, Ignore("Fixing tests")]
+        [UnityTest]
         public IEnumerator CheckFireHeightMatchesSliderValue()
         {
-            yield return LoadTestScene();
-
             // Check that the objects exist. 
             GameObject pinchSlider = GameObject.Find("PinchSlider");
             Assert.IsNotNull(pinchSlider);
@@ -131,17 +105,17 @@ namespace HoloTest_Namespace
             float expected_height = (randomHeight * fireHandler.sliderScaleFactor);
 
             Assert.AreEqual(expected_height, currentHeight);
+
+            yield return null; 
         }
 
         /// <summary>
-        /// This example shows how you can check out the 
+        /// This example shows how you can inspect the 
         /// properties of a particle system. 
         /// </summary>
-        [UnityTest, Ignore("Fixing tests")]
+        [UnityTest]
         public IEnumerator CanChangeFireAnimation()
         {
-            yield return LoadTestScene();
-            
             GameObject burnerObject = GameObject.Find("bunsen_burner");
             FireHandler fireHandler = burnerObject.GetComponent<FireHandler>();
 
@@ -154,7 +128,45 @@ namespace HoloTest_Namespace
             fireHandler.PlayNextAnimation();
             isEmitting = fireHandler.isFireEmitting();
             Assert.AreEqual(true, isEmitting);
+
+            yield return null;
         }
+
+        /// <summary>
+        /// The profiler normally says my framerate is super high, 
+        /// which makes sense since I am not running on any actual 
+        /// device. But then this test randomly failed under the 
+        /// same conditions. 
+        /// My current understanding is that the framerate hit during
+        /// testing is due to PlayMode test conditions rather than 
+        /// the scene itself. As far as I understand, all of the tests 
+        /// run at the same time. I don't know that performance-focused
+        /// unit tests belong in PlayMode test suites anyway. 
+        /// </summary>
+        /// <returns></returns>
+        [UnityTest]
+        public IEnumerator CheckFramerate()
+        {
+            GameObject sceneLogic = GameObject.Find("Scene");
+            SceneLogic sceneLogicScript = sceneLogic.GetComponent<SceneLogic>();
+            var framerate = sceneLogicScript.GetAverageFramerate();
+
+            // This may or may not meet the target, but it varies between 50 - 60:
+            Debug.Log("Framerate before using targetFrameRate - " + framerate); 
+
+            Application.targetFrameRate = 60;
+            yield return new WaitForSeconds(2);
+
+            framerate = sceneLogicScript.GetAverageFramerate();
+            Assert.GreaterOrEqual(framerate, 60); 
+
+            yield return null;
+        }
+
+        // This is kind of neat. For future me to look at: 
+        //
+        //  ProcessYAMLAssets(allFilesUnderAssets, Application.dataPath.
+        //  Replace("Assets", "NuGet/Content"), remapDictionary, compiledClassReferences);
     }
 }
 

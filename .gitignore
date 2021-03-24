@@ -2,6 +2,10 @@
 
 graphics_lib/
 
+# Absolutely need to find a way to get 
+# Unity to stop generating these:
+*/*/InitTestScene*
+
 #---------------------------------#
 # Unity-specific directories
 #---------------------------------#
