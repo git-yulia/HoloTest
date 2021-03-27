@@ -132,37 +132,6 @@ namespace HoloTest_Namespace
             yield return null;
         }
 
-        /// <summary>
-        /// The profiler normally says my framerate is super high, 
-        /// which makes sense since I am not running on any actual 
-        /// device. But then this test randomly failed under the 
-        /// same conditions. 
-        /// My current understanding is that the framerate hit during
-        /// testing is due to PlayMode test conditions rather than 
-        /// the scene itself. As far as I understand, all of the tests 
-        /// run at the same time. I don't know that performance-focused
-        /// unit tests belong in PlayMode test suites anyway. 
-        /// </summary>
-        /// <returns></returns>
-        [UnityTest]
-        public IEnumerator CheckFramerate()
-        {
-            GameObject sceneLogic = GameObject.Find("Scene");
-            SceneLogic sceneLogicScript = sceneLogic.GetComponent<SceneLogic>();
-            var framerate = sceneLogicScript.GetAverageFramerate();
-
-            // This may or may not meet the target, but it varies between 50 - 60:
-            Debug.Log("Framerate before using targetFrameRate - " + framerate); 
-
-            Application.targetFrameRate = 60;
-            yield return new WaitForSeconds(2);
-
-            framerate = sceneLogicScript.GetAverageFramerate();
-            Assert.GreaterOrEqual(framerate, 60); 
-
-            yield return null;
-        }
-
         // This is kind of neat. For future me to look at: 
         //
         //  ProcessYAMLAssets(allFilesUnderAssets, Application.dataPath.
