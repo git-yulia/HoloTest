@@ -9,7 +9,7 @@ using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Utilities.Editor;
 
-namespace HoloTest_Namespace
+namespace HoloTest
 {
     public class EditModeTests
     {

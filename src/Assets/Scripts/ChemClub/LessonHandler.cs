@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace HoloTest_Namespace
+namespace HoloTest
 {
     public class LessonHandler : MonoBehaviour
     {

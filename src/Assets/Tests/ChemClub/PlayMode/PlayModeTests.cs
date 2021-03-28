@@ -13,8 +13,16 @@ using Microsoft.MixedReality.Toolkit.Input;
 using Microsoft.MixedReality.Toolkit.Tests;
 using Microsoft.MixedReality.Toolkit.Utilities;
 
-namespace HoloTest_Namespace
+namespace HoloTest
 {
+    /// <summary>
+    /// This particular class contains a smattering of 
+    /// different test examples. Test suites should usually be 
+    /// organized by testable component or some other theme.
+    /// 
+    /// The MRTK.Toolkit.Tests package provides a good example
+    /// of how to organize many different types of tests.
+    /// </summary>
     public class PlayModeTests
     {
         private const string testSceneName = "ChemClub";
