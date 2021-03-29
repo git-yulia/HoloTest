@@ -56,6 +56,27 @@ namespace HoloTest
             SetFlameHeight(0);
         }
 
+        // spaghetti
+        public int GetFireType()
+        {
+            int fireType = 0;
+
+            if (activeFirePrefab == saved_firePrefabMixedLow)
+            {
+                fireType = 0;
+            }
+            else if (activeFirePrefab == saved_firePrefabRed)
+            {
+                fireType = 1;
+            }
+            else
+            {
+                fireType = 2;
+            }
+
+            return fireType; 
+        }
+
         public void GetFireState(out int fireType, out float fireHeight)
         {
             fireType = 0;

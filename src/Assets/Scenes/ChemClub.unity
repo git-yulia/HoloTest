@@ -152,7 +152,7 @@ Transform:
   m_Children:
   - {fileID: 692691347}
   m_Father: {fileID: 1158540987}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &97345989
 GameObject:
@@ -1331,8 +1331,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1654987725}
   - {fileID: 48595986}
+  - {fileID: 1654987725}
   m_Father: {fileID: 1410588313}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1656,55 +1656,55 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalScale.x
-      value: 9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalScale.y
-      value: 9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalScale.z
-      value: 9
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.096
+      value: -1.444
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9726
+      value: -1.097
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.056
+      value: 2.982
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.22044368
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.22044368
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.67186654
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.67186654
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 216.33
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1725,10 +1725,10 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_Materials.Array.data[2]
       value: 
-      objectReference: {fileID: 2100000, guid: e083769c79767034693599f8246be8b3, type: 2}
+      objectReference: {fileID: 2100000, guid: 0141cd91e1534b04b994c2990bf5be9e, type: 2}
     - target: {fileID: 919132149155446097, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
       propertyPath: m_Name
-      value: beaker_with_label
+      value: beaker
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
@@ -1762,8 +1762,8 @@ MonoBehaviour:
   oneHandRotationModeNear: 1
   oneHandRotationModeFar: 1
   releaseBehavior: 3
-  smoothingFar: 1
-  smoothingNear: 1
+  smoothingFar: 0
+  smoothingNear: 0
   moveLerpTime: 0.001
   rotateLerpTime: 0.001
   scaleLerpTime: 0.001
@@ -1820,7 +1820,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

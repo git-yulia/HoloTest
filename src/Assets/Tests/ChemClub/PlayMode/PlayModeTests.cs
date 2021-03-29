@@ -36,7 +36,7 @@ namespace HoloTest
         [UnitySetUp]
         public IEnumerator Setup()
         {
-            AsyncOperation loadOp = SceneManager.LoadSceneAsync(testSceneName);
+            AsyncOperation loadOp = SceneManager.LoadSceneAsync(testSceneName, LoadSceneMode.Single);
             loadOp.allowSceneActivation = true;
             while (!loadOp.isDone)
             {
@@ -51,10 +51,6 @@ namespace HoloTest
             Scene scene = SceneManager.GetSceneByName(testProfileName);
             if (scene.isLoaded)
             {
-                // Not sure why Unity requires empty scene to be created first - 
-                // need to investigate this. 
-                Scene playModeTestScene = SceneManager.CreateScene("Empty");
-                SceneManager.SetActiveScene(playModeTestScene);
                 SceneManager.UnloadSceneAsync(scene.buildIndex);
             }
             yield return null;
