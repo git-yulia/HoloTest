@@ -135,12 +135,14 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: -8173806845940297335, guid: 8436f4c7103be254db90e84c3378e2da, type: 2}
   - {fileID: 11400000, guid: e1a878fea117ccb47afed2c450a3fead, type: 2}
   - {fileID: -2040242156187849265, guid: 0d4ec16bdd982094c9bf57c0eea816b6, type: 2}
   - {fileID: -1320164442120687749, guid: da1189b6e3050c74d87621232016ea65, type: 2}
   - {fileID: 0}
-  metroInputSource: 0
+  metroInputSource: 1
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
   xboxOneDisableKinectGpuReservation: 1
@@ -632,19 +634,52 @@ PlayerSettings:
   metroSplashScreenUseBackgroundColor: 0
   platformCapabilities:
     WindowsStoreApps:
+      EnterpriseAuthentication: True
       VideosLibrary: True
-      GazeInput: True
+      HumanInterfaceDevice: True
+      Location: True
+      Chat: True
+      Bluetooth: True
+      MusicLibrary: True
+      AllJoyn: True
       PrivateNetworkClientServer: True
+      LowLevelDevices: True
       InternetClientServer: True
+      OfflineMapsManagement: True
+      Objects3D: True
+      RemoteSystem: True
+      BlockedChatMessages: True
+      PhoneCall: True
+      UserDataTasks: True
+      Appointments: True
+      SystemManagement: True
       SpatialPerception: True
-      PicturesLibrary: True
-      InternetClient: True
-      WebCam: True
       Microphone: True
+      SharedUserCertificates: True
+      InputInjectionBrokered: True
+      PicturesLibrary: True
+      RemovableStorage: True
+      WebCam: True
+      VoipCall: True
+      GazeInput: True
+      UserAccountInformation: True
+      UserNotificationListener: True
+      PhoneCallHistoryPublic: True
+      PointOfService: True
+      RecordedCallsFolder: True
+      Contacts: True
+      InternetClient: True
+      Proximity: True
+      CodeGeneration: True
+      BackgroundMediaPlayback: True
   metroTargetDeviceFamilies:
     Desktop: True
     Holographic: True
+    IoT: True
+    IoTHeadless: True
     Mobile: True
+    Team: True
+    Xbox: True
   metroFTAName: 
   metroFTAFileTypes: []
   metroProtocolName: 

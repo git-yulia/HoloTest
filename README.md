@@ -24,10 +24,6 @@ Greetings! This repository shows how you can set up automated unit testing for U
 
 [x] Another option - 'Simulate in Editor' uses percsim, I believe. 
 
-### Issues found while prototyping percsim
-
-- TBD
-
 ----
 
 ## Future Work
