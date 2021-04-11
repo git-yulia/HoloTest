@@ -12,27 +12,32 @@ Greetings! This repository shows how you can set up automated unit testing for U
 
 ## Perception Simulation Testing Status
 
-[x] Can deploy the demo app to the emulator and use a PerceptionSim script to do something
+**[Y] Can deploy the demo app to the emulator during Playmode tests**
 
-[x] Get the PerceptionSimulation plugin to work with Unity
+There are a few ways to do this, but I got it to work by switching the platform to Standalone (instead of UWP) and then clicking on 'Run All Tests (Standalone Windows)' in the Test Runner. The other platform says 'Run All Tests (WSAPlayer)' but fails to load that player. 
 
-[x] Can run PerceptionSim from within Unity, using Holographic Remoting
+"WSAPlayer is the name Unity uses for its UWP standalone player." 
 
-[x] Integrate PerceptionSim testing into Playmode testing and run them at the same time
+In this way, you can run the playmode tests in the emulator. I think it uses a PerceptionSim headset and input, so this can be utilized in these tests. Needs more tinkering, though. 
 
-[x] Alternatively, see if input simulation in MRTK is a viable option
+**[N] Get the PerceptionSimulation plugin to work with Unity**
 
-[x] Another option - 'Simulate in Editor' uses percsim, I believe. 
+**[N] Can run PerceptionSim from within Unity, using Holographic Remoting**
+
+(Would this even use PS? Or would it just use Unity input simulation and send that to the device?)
+
+**[N] Integrate PerceptionSim testing into Playmode testing and run them at the same time**
+
+**[Y] Alternatively, see if input simulation in MRTK is a viable option**
+
+An example of this is included in the src/ project, in the PlayMode tests. This is a good way to write HoloLens interface tests (such as hand interactions), but more investigation is needed to see how 'accurate' the tests are compared to those that use PerceptionSimulation. 
+
+**[N] Another option - try 'Simulate in Editor' - does this use the PerceptionSimulation API?**
 
 ----
 
-## Future Work
-
-[x] Create or recycle a PlayMode test utility. You can test MRTK input simulation in PlayMode, but there is a lot of setup and teardown involved. I made the mistake of simply calling PlayModeTestUtilities.Setup while prototyping these tests. I'm pretty sure that utility was made exclusively for MRTK developers - not for MRTK end users. (For example, it doesn't look like their Setup function allows you to load an existing scene. Leads me to believe it is just an internal utility.) A bit of investigation is needed to find the best way to repurpose this code. 
-
-[x] Once the setup/teardown is ready - add examples that utilize that. 
-
-[x] Jenkins should show you the test results. NUnit does not seem to like that I am claiming that Unity test results are the same as NUnit test results. Some formatting is needed, probably. (For now, I view test results through the build logs folder mentioned in the Jenkinsfile.)
+Interesting discussion about end-to-end testing using PercSim in this thread:
+https://forums.hololens.com/discussion/3239/hololens-end-to-end-tests
 
 ----
 
@@ -108,3 +113,9 @@ Other setup steps:
 - [Jenkins Settings] Set up a custom workspace - some target directory on the build machine.
 
 There are some other Jenkins steps not included here. You would need to set up a Pipeline project, then tell Jenkins where to find the Jenkinsfile, etc. Since these are easy to find on the internet, I won't re-type them here, but let me know if you run into any trouble.
+
+----
+
+## Future Work 
+
+[x] Jenkins should show you the test results. NUnit does not seem to like that I am claiming that Unity test results are the same as NUnit test results. Some formatting is needed, probably. (For now, I view test results through the build logs folder mentioned in the Jenkinsfile.)
