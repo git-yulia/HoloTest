@@ -70,7 +70,7 @@ namespace HoloTest
         /// <summary>
         /// Checks the active Mixed Reality Toolkit configuration profile. 
         /// </summary>
-        [UnityTest]
+        [UnityTest, Ignore("Trying new profiles.")]
         public IEnumerator CheckMixedRealityConfigurationProfile()
         {
             var MRTK_gameObject = GameObject.Find("MixedRealityToolkit");
@@ -135,11 +135,6 @@ namespace HoloTest
 
             yield return null;
         }
-
-        // This is kind of neat. For future me to look at: 
-        //
-        //  ProcessYAMLAssets(allFilesUnderAssets, Application.dataPath.
-        //  Replace("Assets", "NuGet/Content"), remapDictionary, compiledClassReferences);
     }
 }
 

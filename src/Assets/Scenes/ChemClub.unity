@@ -722,6 +722,7 @@ GameObject:
   - component: {fileID: 667095501}
   - component: {fileID: 667095500}
   - component: {fileID: 667095502}
+  - component: {fileID: 667095499}
   m_Layer: 0
   m_Name: main_camera
   m_TagString: MainCamera
@@ -794,6 +795,29 @@ Transform:
   m_Father: {fileID: 1429682616}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &667095499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667095495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf98dd1206224111a38765365e98e207, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lockCursorWhenFocusLocked: 1
+  setCursorInvisibleWhenFocusLocked: 0
+  maxGazeCollisionDistance: 10
+  raycastLayerMasks:
+  - serializedVersion: 2
+    m_Bits: 4294967291
+  stabilizer:
+    storedStabilitySamples: 60
+  gazeTransform: {fileID: 0}
+  minHeadVelocityThreshold: 0.5
+  maxHeadVelocityThreshold: 2
 --- !u!114 &667095500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1706,6 +1730,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: beaker
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 562b4008dc33dfa458971911e8f6c46f, type: 3}
 --- !u!1 &1654987724 stripped
@@ -2041,7 +2069,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d9acc7968244a8886f3af591305bcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeProfile: {fileID: 11400000, guid: ab247a53a153f6442a82cb96eafb71de, type: 2}
+  activeProfile: {fileID: 11400000, guid: 1e3716acf2b8f684aba2d69548e29c52, type: 2}
 --- !u!4 &1839028543
 Transform:
   m_ObjectHideFlags: 0

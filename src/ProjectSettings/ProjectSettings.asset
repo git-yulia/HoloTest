@@ -137,11 +137,12 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: -1320164442120687749, guid: da1189b6e3050c74d87621232016ea65, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: -8173806845940297335, guid: 8436f4c7103be254db90e84c3378e2da, type: 2}
   - {fileID: 11400000, guid: e1a878fea117ccb47afed2c450a3fead, type: 2}
   - {fileID: -2040242156187849265, guid: 0d4ec16bdd982094c9bf57c0eea816b6, type: 2}
-  - {fileID: -1320164442120687749, guid: da1189b6e3050c74d87621232016ea65, type: 2}
-  - {fileID: 0}
   metroInputSource: 1
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -306,7 +307,7 @@ PlayerSettings:
   - m_BuildTarget: iOSSupport
     m_GraphicsJobs: 0
   - m_BuildTarget: WindowsStandaloneSupport
-    m_GraphicsJobs: 1
+    m_GraphicsJobs: 0
   - m_BuildTarget: XboxOnePlayer
     m_GraphicsJobs: 1
   - m_BuildTarget: LuminSupport

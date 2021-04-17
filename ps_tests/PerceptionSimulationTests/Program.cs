@@ -21,7 +21,8 @@ namespace ConsoleApplication1
                 {
                     sink = await RestSimulationStreamSink.Create(
                         // use the IP address for your device/emulator
-                        new Uri("https://192.168.92.39"),
+                        // was https before
+                        new Uri("http://172.28.20.56"),
                         // no credentials are needed for the emulator
                         new System.Net.NetworkCredential("", ""),
                         // normal priorty
@@ -42,12 +43,12 @@ namespace ConsoleApplication1
                     manager.Human.RightHand.Activated = true;
 
                     // Simulate Bloom gesture, which should cause Shell to disappear
-                    manager.Human.RightHand.PerformGesture(SimulatedGesture.Home);
-                    Thread.Sleep(2000);
+                    //manager.Human.RightHand.PerformGesture(SimulatedGesture.Home);
+                    //Thread.Sleep(2000);
 
                     // Simulate Bloom gesture again... this time, Shell should reappear
-                    manager.Human.RightHand.PerformGesture(SimulatedGesture.Home);
-                    Thread.Sleep(2000);
+                    //manager.Human.RightHand.PerformGesture(SimulatedGesture.Home);
+                    //Thread.Sleep(2000);
 
                     // Simulate a Head rotation down around the X axis
                     // This should cause gaze to aim about the center of the screen
@@ -56,7 +57,7 @@ namespace ConsoleApplication1
 
                     // Simulate a finger press & release
                     // Should cause a tap on the center tile, thus launching it
-                    manager.Human.RightHand.PerformGesture(SimulatedGesture.FingerPressed);
+                   /* manager.Human.RightHand.PerformGesture(SimulatedGesture.FingerPressed);
                     Thread.Sleep(300);
                     manager.Human.RightHand.PerformGesture(SimulatedGesture.FingerReleased);
                     Thread.Sleep(2000);
@@ -66,7 +67,7 @@ namespace ConsoleApplication1
                     manager.Human.RightHand.PerformGesture(SimulatedGesture.FingerPressed);
                     Thread.Sleep(300);
                     manager.Human.RightHand.PerformGesture(SimulatedGesture.FingerReleased);
-                    Thread.Sleep(5000);
+                    Thread.Sleep(5000);*/
 
                     // Simulate a Head rotation towards the upper right corner
                     manager.Human.Head.Rotate(new Rotation3(-0.14f, 0.17f, 0.0f));

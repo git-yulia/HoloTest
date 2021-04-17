@@ -1,24 +1,29 @@
 # HoloTest
 
-Greetings! This repository shows how you can set up automated unit testing for Unity and the Mixed Reality Toolkit. There is a demo Unity project in the src/ folder which simply provides something to test. 
+Greetings! This repository shows how you can set up automated unit testing for Unity and the Mixed Reality Toolkit. 
+There is a demo Unity project in the src/ folder which simply provides something to test. 
 
 ## Ingredients
 
-- Unity 2020.3.0f1 (should work with 2019.3+ too - untested)
+- Unity 2020.3.0f1
 - MRTK 2.6.1
 - (optional) Jenkins 2.283 (v.284 broke some plugins for me)
 
 ----
 
-## Perception Simulation Testing Status
+## Perception Simulation Testing Goals
 
-**[Y] Can deploy the demo app to the emulator during Playmode tests**
+**[Y] Run PlayMode tests in the emulator**
 
 There are a few ways to do this, but I got it to work by switching the platform to Standalone (instead of UWP) and then clicking on 'Run All Tests (Standalone Windows)' in the Test Runner. The other platform says 'Run All Tests (WSAPlayer)' but fails to load that player. 
 
-"WSAPlayer is the name Unity uses for its UWP standalone player." 
-
 In this way, you can run the playmode tests in the emulator. I think it uses a PerceptionSim headset and input, so this can be utilized in these tests. Needs more tinkering, though. 
+
+**[N] Write an example test that uses PerceptionSim**
+
+**[N] Run PlayMode tests using the WSAPlayer**
+
+I can't find much documentation on this player, other than someone saying it wasn't supported in 2017. (might be okay to use now?)
 
 **[N] Get the PerceptionSimulation plugin to work with Unity**
 
@@ -26,13 +31,9 @@ In this way, you can run the playmode tests in the emulator. I think it uses a P
 
 (Would this even use PS? Or would it just use Unity input simulation and send that to the device?)
 
-**[N] Integrate PerceptionSim testing into Playmode testing and run them at the same time**
-
 **[Y] Alternatively, see if input simulation in MRTK is a viable option**
 
 An example of this is included in the src/ project, in the PlayMode tests. This is a good way to write HoloLens interface tests (such as hand interactions), but more investigation is needed to see how 'accurate' the tests are compared to those that use PerceptionSimulation. 
-
-**[N] Another option - try 'Simulate in Editor' - does this use the PerceptionSimulation API?**
 
 ----
 
